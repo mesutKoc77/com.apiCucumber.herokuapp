@@ -33,7 +33,7 @@ public class ReservationSteps {
     @Given("the user provides the information required for the reservation")
     public void user_provides_information_for_reservation() {
         BookingDates bookingDates = new BookingDates("2018-01-01", "2019-01-01");
-        booking = new Booking("Jim", "Brown", 111, true, bookingDates, "Breakfast");
+        booking = new Booking("Mesut", "Brown", 111, true, bookingDates, "Breakfast");
     }
 
     @When("User creates hotel reservation")
@@ -46,6 +46,12 @@ public class ReservationSteps {
         assertNotNull(bookingResponse);
         assertNotNull(bookingResponse.getBookingid());
         Assertions.assertEquals("Brown",bookingResponse.getBooking().getLastname());
+        Assertions.assertEquals("Mesut",bookingResponse.getBooking().getFirstname());
+        Assertions.assertEquals("2018-01-01",bookingResponse.getBooking().getBookingdates().getCheckin());
+        Assertions.assertEquals("2019-01-01",bookingResponse.getBooking().getBookingdates().getCheckout());
+        Assertions.assertEquals(111,bookingResponse.getBooking().getTotalprice());
+        Assertions.assertTrue(bookingResponse.getBooking().isDepositpaid());
+        Assertions.assertEquals("Breakfast",bookingResponse.getBooking().getAdditionalneeds());
     }
 
     @Then("User cancels the created reservation")
